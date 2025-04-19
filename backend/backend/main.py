@@ -1,17 +1,21 @@
 from fastapi import FastAPI
-from backend.routers import users
+from backend.routers import  vacancies
 from backend.db import db
+from contextlib import asynccontextmanager
 
-
-app = FastAPI()
-
-app.include_router(users.users)
-
-@app.on_event("startup")
-def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     db.init()
+    yield
+    db.connection.close()
+
+
+app = FastAPI(lifespan=lifespan, openapi_url='/openapi.json')
+
+# app.include_router(users.users)
+app.include_router(vacancies.vac)
 
 @app.get('/')
 def root():
-    return {"root": "root"}
+    return True
 

@@ -32,58 +32,61 @@ class DB:
         atexit.register(self.connection.close)
 
     #vacancies
-    @handle_db_errors
     def init(self):
-        init_users = f'''CREATE TABLE IF NOT EXISTS users (
-            user_id integer GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
-            username VARCHAR(15),
-            login VARCHAR(15) UNIQUE,
-            cached_password char(64),
-            salt char({salt_len})
-        );'''
-        self.cursor.execute(init_users)
+        # init_users = f'''CREATE TABLE IF NOT EXISTS users (
+        #     user_id integer GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
+        #     username VARCHAR(15),
+        #     login VARCHAR(15) UNIQUE,
+        #     cached_password char(64),
+        #     salt char({salt_len})
+        # );'''
+        # self.cursor.execute(init_users)
         init_vacancies = '''CREATE TABLE IF NOT EXISTS vacancies (
-            vac_id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
+            vac_id SERIAL PRIMARY KEY,
+            name VARCHAR(20),
             payment INTEGER,
             description VARCHAR(100),
             responsibilities VARCHAR(200),
             requirements VARCHAR(200),
             conditions VARCHAR(200),
             contacts VARCHAR(20)
-        );'''
+        );
+        '''
         self.cursor.execute(init_vacancies)
+        self.connection.commit()
         return 200, 'success!'
 
     @handle_db_errors
     def push_vacancy(self, data: Vacancy): # shouldnt be used. The vacancy pushing should be implemented in fastapi admin panel
-        sql = '''INSERT INTO users (payment, description, responsibilities, requirements, conditions, contacts)
+        sql = '''INSERT INTO vacancies (payment, description, responsibilities, requirements, conditions, contacts)
         VALUES (%s, %s, %s, %s, %s, %s)
         '''
         self.cursor.execute(sql, (data.payment, data.description, data.responsibilities, data.requirements, data.conditions, data.contacts))
+        self.connection.commit()
 
     @handle_db_errors
     def list_vacancies(self):
-        sql = '''SELECT vac_id, username, description, payment FROM vacancies'''
+        sql = '''SELECT vac_id, description, payment FROM vacancies'''
         res = self.cursor.execute(sql)
-        return 200, res
+        return 200, res.fetchall()
     
     @handle_db_errors
     def get_vacancy(self, vac_id: int):
-        sql = '''SELECT payment, description, responsibilities, requirements, conditions, contacts FROM users WHERE vac_id = %s'''
+        sql = '''SELECT payment, description, responsibilities, requirements, conditions, contacts FROM vacancies WHERE vac_id = %s'''
         res = self.cursor.execute(sql, (vac_id, ))
-        return 200, res
+        return 200, res.fetchone()
 
     #users
-    @handle_db_errors
-    def add_user(self, username: str, login: str, cached_password: str, salt: str):
-        sql = '''INSERT INTO users (username, login, cached_password, salt) VALUES %s, %s, %s, %s;'''
-        self.cursor.execute(sql, (username, login, cached_password, salt))
-        return 200, 'success!'
+    # @handle_db_errors
+    # def add_user(self, username: str, login: str, cached_password: str, salt: str):
+    #     sql = '''INSERT INTO users (username, login, cached_password, salt) VALUES %s, %s, %s, %s;'''
+    #     self.cursor.execute(sql, (username, login, cached_password, salt))
+    #     return 200, 'success!'
     
-    @handle_db_errors
-    def get_salt_and_psswd_cache(self, user_id: int):
-        sql = '''SELECT cached_password, salt FROM users WHERE user_id = %s'''
-        res = self.cursor.execute(sql, (user_id))
-        return 200, res
+    # @handle_db_errors
+    # def get_salt_and_psswd_cache(self, user_id: int):
+    #     sql = '''SELECT cached_password, salt FROM users WHERE user_id = %s'''
+    #     res = self.cursor.execute(sql, (user_id))
+    #     return 200, res
 
 db = DB(PG_CONNECT_DATA)
