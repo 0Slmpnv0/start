@@ -29,7 +29,7 @@ services:
   directus:
     image: directus/directus:11.6.1
     environment:
-      LOG_LEVEL: debug
+      # LOG_LEVEL: debug
       SECRET: ${ADMIN_SECRET}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
@@ -61,6 +61,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro 
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       backend: 
         condition: service_healthy
