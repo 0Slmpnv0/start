@@ -46,7 +46,7 @@ const Vacancies = () => {
               key={vacancy.vac_id}
               title={vacancy.name}
               description={vacancy.description}
-              salary={`от ${vacancy.payment} ₽`}
+              salary={`от ${vacancy.payment}`}
               onClick={() => navigate(`/vacancy/${vacancy.vac_id}`)}
             />
           ))}

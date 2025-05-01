@@ -1,12 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getVacancyInfo, VacancyFull } from '../api';
+import Icon from '../components/Icon';
 
 const VacancyDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [vacancy, setVacancy] = useState<VacancyFull | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const goBack = () => navigate('/vacancies');
 
   useEffect(() => {
     if (!id) return;
@@ -51,6 +55,16 @@ const VacancyDetail = () => {
             <p className="text-brand-gray">{vacancy.connection}</p>
           </section>
         </div>
+      </div>
+      
+      <div className="max-w-3xl mx-auto mt-8">
+        <button 
+          onClick={goBack}
+          className="flex items-center text-brand-light hover:text-brand-gray transition-colors group"
+        >
+          <Icon name="arrow-left" className="mr-2 group-hover:translate-x-[-4px] transition-transform" />
+          <span className="text-lg">Назад к списку вакансий</span>
+        </button>
       </div>
     </div>
   );
