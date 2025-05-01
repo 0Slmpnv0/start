@@ -1,74 +1,14 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html, body {
-  @apply h-full;
-  /* background-color:#111827;  */
-}
-
-#root {
-  @apply h-full;
-}
-
-.navbar {
-  background-color: #111827;
-  @apply mx-20 mt-2 text-white;
-  @apply flex;
-}
-
-.navbar > div {
-  @apply flex ml-auto gap-10;
-}
-
-.navbar a {
-  @apply text-white hover:underline;
-}
-
-.mainInfo {
-  background-color: #111827;
-  @apply pt-3 pb-60;
-}
-
-.mainInfo > h1{ 
-  @apply mt-20 mx-20 text-5xl text-white; 
-} 
-
-.Home {
-  @apply h-full flex flex-col;
-}
-
-.HomeCard {
-@apply w-1/3 ml-20 mt-15 rounded-md pl-7 py-5;
-}
-
-.HomeCard > h1 {
-  @apply text-xl mb-5;
-}
-
-.HomeCard > p {
-  @apply text-sm;
-}
-
-.icon {
-  @apply w-7 h-7 mt-1;
-}
-
-.aboutUs {
-  @apply px-20 mt-20;
-}
-
-.aboutUs > h1 {
-  @apply text-4xl;
-}
-
-.aboutUs > p {
-  @apply my-5;
-}
-
-.Footer {
-  @apply flex text-white py-10 px-20 mt-auto;
-  background-color: #111827;
-}
-
-.Footer > div {
-  @apply flex ml-auto gap-5;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #06141B;
+  color: #CCD0CF;
 }

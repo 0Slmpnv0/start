@@ -40,19 +40,32 @@ services:
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       PUBLIC_URL: "http://admin.localhost"
-      # ADMIN_PUBLIC_PATH: "/admin"
       
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://directus:8055/server/health"]
       start_interval: 5s
       interval: 5s
-      retries: 5
+      retries: 10
 
     depends_on:
       db:
         condition: service_healthy
       backend:
         condition: service_healthy
+  frontend:
+    build: ./frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app/frontend
+          ignore:
+            - ./frontend/node_modules
+        - action: rebuild
+          path: package.json
 
   nginx:
     image: nginx:stable-alpine
@@ -68,6 +81,8 @@ services:
         condition: service_healthy
       directus:
         condition: service_healthy
+      frontend: 
+        condition: service_started
 
 volumes:
   db-data: {}

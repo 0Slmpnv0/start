@@ -42,15 +42,16 @@ class DB:
         # );'''
         # self.cursor.execute(init_users)
         init_vacancies = '''CREATE TABLE IF NOT EXISTS vacancies (
-            vac_id SERIAL PRIMARY KEY,
-            name VARCHAR(20),
+            vac_id integer GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
+            name VARCHAR(50),
             payment INTEGER,
-            description VARCHAR(100),
-            responsibilities VARCHAR(200),
-            requirements VARCHAR(200),
-            conditions VARCHAR(200),
-            contacts VARCHAR(20)
-        );
+            description VARCHAR(250),
+            age_restriction VARCHAR(4),
+            work_time VARCHAR(70),
+            required_skills VARCHAR(120),
+            full_description TEXT,
+            connection VARCHAR(15)
+           );
         '''
         self.cursor.execute(init_vacancies)
         self.connection.commit()
@@ -66,13 +67,13 @@ class DB:
 
     @handle_db_errors
     def list_vacancies(self):
-        sql = '''SELECT vac_id, description, payment FROM vacancies'''
+        sql = '''SELECT vac_id, name, description, payment FROM vacancies'''
         res = self.cursor.execute(sql)
         return 200, res.fetchall()
     
     @handle_db_errors
     def get_vacancy(self, vac_id: int):
-        sql = '''SELECT payment, description, responsibilities, requirements, conditions, contacts FROM vacancies WHERE vac_id = %s'''
+        sql = '''SELECT name, payment, description, age_restriction, work_time, required_skills, full_description, connection FROM vacancies WHERE vac_id = %s'''
         res = self.cursor.execute(sql, (vac_id, ))
         return 200, res.fetchone()
 
