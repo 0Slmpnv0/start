@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
-import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom';
 import VacancyCard from '../components/VacancyCard';
 import AnnouncementCard from '../components/AnnouncementCard';
 import AboutSection from '../components/AboutSection';
 import SectionTitle from '../components/SectionTitle';
-import Icon from '../components/Icon';
+
 
 const Home = () => {
   const navigate = useNavigate();

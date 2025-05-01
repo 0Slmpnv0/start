@@ -1,13 +1,15 @@
-FROM node:latest
-
-
-RUN mkdir - ./app
+# Stage 1 - Build
+FROM node:18-alpine AS builder
 WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-COPY package.json package-lock.json /app/
+# Stage 2 - Production
+FROM node:18-alpine
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=builder /app/dist /app/dist
 
-RUN npm install .
-
-COPY . ./
-
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["serve", "-s", "dist", "-l", "3000", "--no-clipboard"]
