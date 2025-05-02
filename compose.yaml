@@ -3,8 +3,10 @@ services:
     build: ./backend
     env_file:
       - ./backend/backend/.env
-    # ports:
-    #   - "8000:8000"
+    environment:
+      - VIRTUAL_HOST=api.startlab.site
+      - LETSENCRYPT_HOST=api.startlab.site
+      - LETSENCRYPT_EMAIL=slmpnv.code.mail@gmail.com
     healthcheck:
       test: ["CMD", "healthyurl", "http://localhost:8000"]
       start_interval: 7s
@@ -30,6 +32,9 @@ services:
     image: directus/directus:11.6.1
     environment:
       # LOG_LEVEL: debug
+      VIRTUAL_HOST: admin.startlab.site
+      LETSENCRYPT_HOST: admin.startlab.site
+      LETSENCRYPT_EMAIL: slmpnv.code.mail@gmail.com
       SECRET: ${ADMIN_SECRET}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
@@ -39,7 +44,7 @@ services:
       DB_DATABASE: ${POSTGRES_DB}
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
-      PUBLIC_URL: "http://admin.localhost"
+      PUBLIC_URL: "http://admin.startlab.site"
       
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://directus:8055/server/health"]
@@ -57,6 +62,10 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    environment:
+      VIRTUAL_HOST: startlab.site
+      LETSENCRYPT_HOST: startlab.site
+      LETSENCRYPT_EMAIL: slmpnv.code.mail@gmail.com
     develop:
       watch:
         - action: sync
@@ -69,19 +78,21 @@ services:
 
   nginx-proxy:
     image: jwilder/nginx-proxy 
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro 
-      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # - ./nginx/conf.d:/etc/nginx/conf.d:ro 
+      # - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - certs:/etc/nginx/certs:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
     depends_on:
-      backend: 
+      backend:
         condition: service_healthy
       directus:
         condition: service_healthy
