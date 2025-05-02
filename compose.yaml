@@ -15,7 +15,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    expose: 8000
+    expose: 
+      - "8000"
 
   db:
     image: postgres:15
@@ -58,7 +59,8 @@ services:
         condition: service_healthy
       backend:
         condition: service_healthy
-    expose: 8055
+    expose: 
+      - "8055"
 
   frontend:
     build: ./frontend
@@ -78,7 +80,8 @@ services:
             - ./frontend/node_modules
         - action: rebuild
           path: package.json
-    expose: 3000
+    expose: 
+      - "3000"
         
 
   nginx-proxy:
