@@ -16,7 +16,7 @@ export interface VacancyFull {
   connection: string;
 }
 
-const API_URL = 'http://api.localhost';
+const API_URL = 'http://api.startlab.site';
 
 export async function getVacanciesList(): Promise<VacancyShort[]> {
   const res = await fetch(`${API_URL}/vacancies/list`);
