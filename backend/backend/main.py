@@ -17,7 +17,7 @@ app = FastAPI(lifespan=lifespan, openapi_url='/openapi.json')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://startlab.site", "http://startlab.site:5173"],
+    allow_origins=["https://startlab.site", "https://startlab.site:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
