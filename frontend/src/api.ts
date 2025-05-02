@@ -16,7 +16,11 @@ export interface VacancyFull {
   connection: string;
 }
 
+<<<<<<< Updated upstream
 const API_URL = 'http://api.localhost';
+=======
+const API_URL = 'https://api.startlab.site';
+>>>>>>> Stashed changes
 
 export async function getVacanciesList(): Promise<VacancyShort[]> {
   const res = await fetch(`${API_URL}/vacancies/list`);
