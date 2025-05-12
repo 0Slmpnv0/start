@@ -67,7 +67,7 @@ class DB:
 
     @handle_db_errors
     def list_vacancies(self):
-        sql = '''SELECT vac_id, name, recruiter_company, payment FROM vacancies'''
+        sql = '''SELECT vac_id, name, payment, recruiter_company FROM vacancies'''
         res = self.cursor.execute(sql)
         return 200, res.fetchall()
     

@@ -37,8 +37,8 @@ export async function getVacancyInfo(vac_id: number): Promise<VacancyFull> {
   const data = await res.json();
   const [
     name,
-    recruiter_company,
     payment,
+    recruiter_company,
     age_restriction,
     work_time,
     full_description,
