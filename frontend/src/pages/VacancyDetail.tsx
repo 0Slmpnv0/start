@@ -30,29 +30,25 @@ const VacancyDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto bg-brand-darkblue rounded-lg shadow-md p-8 border border-brand-blue">
-        <h1 className="text-3xl font-bold mb-4 text-brand-light">{vacancy.name}</h1>
-        <p className="text-2xl font-semibold text-brand-light mb-2">{vacancy.payment} ₽</p>
-        <p className="text-brand-light mb-6">{vacancy.description}</p>
+        <h1 className="text-3xl font-bold mb-4 text-brand-light select-text">{vacancy.name}</h1>
+        <p className="text-2xl font-semibold text-brand-light mb-2 select-text">{vacancy.payment} ₽</p>
+        <p className="text-brand-light mb-6 select-text">{vacancy.recruiter_company}</p>
         <div className="space-y-6">
           <section>
-            <h2 className="text-xl font-semibold mb-2 text-brand-light">Возрастное ограничение</h2>
-            <p className="text-brand-gray">{vacancy.age_restriction}</p>
+            <h2 className="text-xl font-semibold mb-2 text-brand-light select-text">Возрастное ограничение</h2>
+            <p className="text-brand-gray select-text">{vacancy.age_restriction}</p>
           </section>
           <section>
-            <h2 className="text-xl font-semibold mb-2 text-brand-light">График работы</h2>
-            <p className="text-brand-gray">{vacancy.work_time}</p>
+            <h2 className="text-xl font-semibold mb-2 text-brand-light select-text">График работы</h2>
+            <p className="text-brand-gray select-text">{vacancy.work_time}</p>
           </section>
           <section>
-            <h2 className="text-xl font-semibold mb-2 text-brand-light">Требуемые навыки</h2>
-            <p className="text-brand-gray">{vacancy.required_skills}</p>
+            <h2 className="text-xl font-semibold mb-2 text-brand-light select-text">Подробное описание</h2>
+            <p className="text-brand-gray select-text">{vacancy.full_description}</p>
           </section>
           <section>
-            <h2 className="text-xl font-semibold mb-2 text-brand-light">Подробное описание</h2>
-            <p className="text-brand-gray">{vacancy.full_description}</p>
-          </section>
-          <section>
-            <h2 className="text-xl font-semibold mb-2 text-brand-light">Связь с работодателем</h2>
-            <p className="text-brand-gray">{vacancy.connection}</p>
+            <h2 className="text-xl font-semibold mb-2 text-brand-light select-text">Связь с работодателем</h2>
+            <p className="text-brand-gray select-text">{vacancy.connection}</p>
           </section>
         </div>
       </div>
@@ -60,9 +56,9 @@ const VacancyDetail = () => {
       <div className="max-w-3xl mx-auto mt-8">
         <button 
           onClick={goBack}
-          className="flex items-center text-brand-light hover:text-brand-gray transition-colors group"
+          className="flex items-center text-brand-light @media (hover: hover) { hover:text-brand-gray } transition-colors group"
         >
-          <Icon name="arrow-left" className="mr-2 group-hover:translate-x-[-4px] transition-transform" />
+          <Icon name="arrow-left" className="mr-2 @media (hover: hover) { group-hover:translate-x-[-4px] } transition-transform" />
           <span className="text-lg">Назад к списку вакансий</span>
         </button>
       </div>
