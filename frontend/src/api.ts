@@ -9,7 +9,6 @@ export interface VacancyFull {
   name: string;
   payment: string;
   recruiter_company: string;
-  description: string;
   age_restriction: string;
   work_time: string;
   full_description: string;

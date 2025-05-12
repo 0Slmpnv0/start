@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import Icon from './Icon';
 
+type IconName = 'search' | 'megaphone' | 'user' | 'mail' | 'phone' | 'arrow-left';
+
 interface NavigationCardProps {
   title: string;
   description: string;
-  icon: string;
+  icon: IconName;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -25,7 +27,7 @@ const NavigationCard: React.FC<NavigationCardProps> = ({
   const isAnnouncements = title === 'Доска объявлений';
 
   useEffect(() => {
-    const handleDocumentClick = (e: MouseEvent) => {
+    const handleDocumentClick = () => {
       if (isAnnouncements && isClicked) {
         setIsClicked(false);
       }
@@ -37,8 +39,7 @@ const NavigationCard: React.FC<NavigationCardProps> = ({
     };
   }, [isAnnouncements, isClicked]);
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleClick = () => {
     if (isAnnouncements) {
       setIsClicked(true);
     }
