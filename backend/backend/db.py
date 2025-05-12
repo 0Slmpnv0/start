@@ -32,6 +32,7 @@ class DB:
         atexit.register(self.connection.close)
 
     #vacancies
+    @handle_db_errors
     def init(self):
         # init_users = f'''CREATE TABLE IF NOT EXISTS users (
         #     user_id integer GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
@@ -44,11 +45,10 @@ class DB:
         init_vacancies = '''CREATE TABLE IF NOT EXISTS vacancies (
             vac_id integer GENERATED ALWAYS AS IDENTITY (START WITH 100000) PRIMARY KEY,
             name VARCHAR(50),
-            payment INTEGER,
-            description VARCHAR(250),
-            age_restriction VARCHAR(4),
+            payment VARCHAR(20),
+            recruiter_company VARCHAR(30),
+            age_restriction VARCHAR(10),
             work_time VARCHAR(70),
-            required_skills VARCHAR(120),
             full_description TEXT,
             connection VARCHAR(15)
            );
@@ -67,13 +67,13 @@ class DB:
 
     @handle_db_errors
     def list_vacancies(self):
-        sql = '''SELECT vac_id, name, description, payment FROM vacancies'''
+        sql = '''SELECT vac_id, name, recruiter_company, payment FROM vacancies'''
         res = self.cursor.execute(sql)
         return 200, res.fetchall()
     
     @handle_db_errors
     def get_vacancy(self, vac_id: int):
-        sql = '''SELECT name, payment, description, age_restriction, work_time, required_skills, full_description, connection FROM vacancies WHERE vac_id = %s'''
+        sql = '''SELECT name, payment, recruiter_company, age_restriction, work_time, full_description, connection FROM vacancies WHERE vac_id = %s'''
         res = self.cursor.execute(sql, (vac_id, ))
         return 200, res.fetchone()
 

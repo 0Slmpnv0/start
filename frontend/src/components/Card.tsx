@@ -11,7 +11,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, className = '', onClick, as: Component = 'div', onMouseEnter, onMouseLeave }) => (
   <Component
-    className={`bg-brand-darkblue hover:bg-brand-blue border border-brand-blue rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 cursor-pointer ${className}`}
+    className={`bg-brand-darkblue @media (hover: hover) { hover:bg-brand-blue hover:shadow-2xl } border border-brand-blue rounded-3xl shadow-xl transition-all duration-300 p-8 cursor-pointer ${className}`}
     onClick={onClick}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}

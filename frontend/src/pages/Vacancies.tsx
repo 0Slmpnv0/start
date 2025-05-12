@@ -21,7 +21,6 @@ const Vacancies = () => {
           list.map(async (v) => {
             try {
               const info = await getVacancyInfo(v.vac_id);
-              // description теперь только из списка, не из info
               return { ...v, name: info.name };
             } catch {
               return { ...v, name: 'Вакансия' };
@@ -45,8 +44,8 @@ const Vacancies = () => {
             <VacancyCard
               key={vacancy.vac_id}
               title={vacancy.name}
-              description={vacancy.description}
-              salary={`от ${vacancy.payment}`}
+              salary={vacancy.payment.toString()}
+              recruiter_company={vacancy.recruiter_company}
               onClick={() => navigate(`/vacancy/${vacancy.vac_id}`)}
             />
           ))}

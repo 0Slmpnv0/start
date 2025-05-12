@@ -1,17 +1,17 @@
 export interface VacancyShort {
   vac_id: number;
   name: string;
-  description: string;
-  payment: number;
+  recruiter_company: string;
+  payment: string;
 }
 
 export interface VacancyFull {
   name: string;
-  payment: number;
+  payment: string;
+  recruiter_company: string;
   description: string;
   age_restriction: string;
   work_time: string;
-  required_skills: string;
   full_description: string;
   connection: string;
 }
@@ -23,11 +23,11 @@ export async function getVacanciesList(): Promise<VacancyShort[]> {
   if (!res.ok) throw new Error('Ошибка загрузки списка вакансий');
   const data = await res.json();
   return (data.vacancies || []).map(
-    ([vac_id, name, description, payment]: [number, string, string, number]) => ({
+    ([vac_id, name, payment, recruiter_company]: [number, string, string, string]) => ({
       vac_id,
       name,
-      description,
       payment,
+      recruiter_company,
     })
   );
 }
@@ -38,21 +38,19 @@ export async function getVacancyInfo(vac_id: number): Promise<VacancyFull> {
   const data = await res.json();
   const [
     name,
+    recruiter_company,
     payment,
-    description,
     age_restriction,
     work_time,
-    required_skills,
     full_description,
     connection
   ] = data.vacancies;
   return {
     name,
     payment,
-    description,
+    recruiter_company,
     age_restriction,
     work_time,
-    required_skills,
     full_description,
     connection
   };
