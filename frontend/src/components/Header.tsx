@@ -6,13 +6,12 @@ const Header = () => {
     <header className="bg-brand-darker border-b border-brand-blue shadow-md fixed top-0 left-0 w-full z-10">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          {/* <img 
-            src="public/images/logo.jpg" 
+          <img
+            src="/start_name_regular.PNG"
             alt="СТАРТ"
             className="h-10 w-auto object-contain"
             style={{ minWidth: '120px' }}
-          /> */}
-          СТАРТ
+          />
         </Link>
         <nav className="flex space-x-6">
           <Link
@@ -33,4 +32,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;
