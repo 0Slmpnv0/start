@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Vacancies from './pages/Vacancies';
 import VacancyDetail from './pages/VacancyDetail';
+import InfoStand from './pages/InfoStand';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/vacancies" element={<Vacancies />} />
             <Route path="/vacancy/:id" element={<VacancyDetail />} />
+            <Route path="/infostand" element={<InfoStand />} />
           </Routes>
         </main>
         <Footer />
@@ -23,4 +25,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
