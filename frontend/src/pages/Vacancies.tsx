@@ -44,7 +44,7 @@ const Vacancies = () => {
             <VacancyCard
               key={vacancy.vac_id}
               title={vacancy.name}
-              salary={vacancy.payment.toString()}
+              salary={vacancy.payment}
               recruiter_company={vacancy.recruiter_company}
               onClick={() => navigate(`/vacancy/${vacancy.vac_id}`)}
             />
